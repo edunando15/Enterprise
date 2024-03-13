@@ -13,5 +13,7 @@ namespace Model.Entities
 
         public string Name { get; set; }
 
+        public ICollection<BookCategory> Books { get; set; }
+
     }
 }

@@ -18,5 +18,8 @@ namespace Model.Entities
         public DateTime PublicationDate { get; set; }
 
         public string Publisher { get; set; }
+
+        public ICollection<BookCategory> Categories { get; set; }
+
     }
 }
