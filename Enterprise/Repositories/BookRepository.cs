@@ -39,10 +39,9 @@ namespace Model.Repositories
             return _context.Books.Where(b => b.PublicationDate.Equals(date)).ToList();
         }
 
-        public List<Book> GetByCategory(Category category)
+        public List<Book> GetByCategory(string category)
         {
-            
-            return new List<Book>();
+            return _context.Books.Where(b => b.BookCategories.Any(bc => bc.Category.Name == category)).ToList();
         }
 
     }
