@@ -18,7 +18,7 @@ namespace Model.Extensions
         {
             services.AddDbContext<LibraryContext>(conf =>
             {
-                conf.UseSqlServer(configuration.GetConnectionString("MyDbContext")
+                conf.UseSqlServer(configuration.GetConnectionString("MyDbContext"));
             });
             services.AddScoped<BookRepository>();
             services.AddScoped<CategoryRepository>();
