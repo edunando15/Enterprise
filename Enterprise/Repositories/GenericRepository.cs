@@ -18,18 +18,18 @@ namespace Model.Repositories
         /// </summary>
         /// <param name="id"> The Id of the Entity. </param>
         /// <returns>The Entity if it exists, null otherwise. </returns>
-        public virtual async Task<T?> Get(object id)
+        public virtual T? Get(int id)
         {
-            return await _context.Set<T>().FindAsync(id);
+            return _context.Set<T>().Find(id);
         }
 
         /// <summary>
         /// Method used to insert an entity.
         /// </summary>
         /// <param name="entity"> The entity to add. </param>
-        public virtual async void Insert(T entity)
+        public virtual void Insert(T entity)
         {
-            await _context.AddAsync(entity);
+            _context.Add(entity);
         }
 
         /// <summary>
@@ -46,9 +46,9 @@ namespace Model.Repositories
             _context.Remove(entity);
         }
 
-        public async void Save()
+        public void Save()
         {
-            await _context.SaveChangesAsync();
+            _context.SaveChanges();
         }
 
 

@@ -14,10 +14,12 @@ namespace Model.Repositories
 
         public BookRepository(MyDbContext context) : base(context) { }
 
-        public override async Task<Book?> Get(object id)
+        public override Book? Get(int id)
         {
-            return await _context.Books.FindAsync(id);
+            return _context.Books.Find(id);
         }
+
+        // TODO contains ecc
 
     }
 }

@@ -19,7 +19,7 @@ namespace Model.Entities
 
         public string Publisher { get; set; }
 
-        public ICollection<BookCategory> Categories { get; set; }
+        public virtual ICollection<BookCategory> BookCategories { get; set; }
 
     }
 }

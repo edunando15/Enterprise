@@ -12,11 +12,11 @@ namespace Model.Configurations
             builder.ToTable("BookCategory");
             builder.HasKey(b => new { b.BookId, b.CategoryId });
             builder.HasOne(bc => bc.Book)
-                .WithMany(b => b.Categories)
+                .WithMany(b => b.BookCategories)
                 .HasForeignKey(bc => bc.BookId);
             builder.HasOne(bc => bc.Category)
-                .WithMany(c => c.Books);
-                
+                .WithMany(c => c.BookCategories)
+                .HasForeignKey(bc => bc.CategoryId);
         }
     }
 }

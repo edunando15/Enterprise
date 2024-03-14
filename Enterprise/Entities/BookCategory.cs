@@ -13,17 +13,9 @@ namespace Model.Entities
 
         public int CategoryId { get; set; }
 
-        public Book Book { get; set; }
+        public virtual Book Book { get; set; }
 
-        public Category Category { get; set; }
-
-        public BookCategory() { }
-
-        public BookCategory(int bookId, int categoryId)
-        {
-            BookId = bookId;
-            CategoryId = categoryId;
-        }
+        public virtual Category Category { get; set; }
 
     }
 }
