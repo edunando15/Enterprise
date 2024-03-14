@@ -19,19 +19,30 @@ namespace Model.Repositories
             return _context.Books.Find(id);
         }
 
-        public Book? GetByName(string name)
+        public List<Book> GetByName(string name)
         {
-            return _context.Books.Where(b => b.Name == name).FirstOrDefault();
+            return _context.Books.Where(b => b.Name == name).ToList();
         }
 
-        public Book? GetByAuthor(string author)
+        public List<Book> GetByAuthor(string author)
         {
-            return _context.Books.Where(b => b.Author == author).FirstOrDefault();
+            return _context.Books.Where(b => b.Author == author).ToList();
         }
 
         public List<Book> GetByPublisher(string publisher)
         {
             return _context.Books.Where(b => b.Publisher == publisher).ToList();
+        }
+
+        public List<Book> GetByPublicationDate(DateTime date)
+        {
+            return _context.Books.Where(b => b.PublicationDate.Equals(date)).ToList();
+        }
+
+        public List<Book> GetByCategory(Category category)
+        {
+            
+            return new List<Book>();
         }
 
     }
