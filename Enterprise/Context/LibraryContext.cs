@@ -3,7 +3,7 @@ using Model.Entities;
 
 namespace Model.Context
 {
-    public class MyDbContext : DbContext
+    public class LibraryContext : DbContext
     {
 
         public DbSet<Book> Books { get; set; }
@@ -14,9 +14,9 @@ namespace Model.Context
 
         public DbSet<User> Users { get; set; }
 
-        public MyDbContext() : base() { }
+        public LibraryContext() : base() { }
 
-        public MyDbContext(DbContextOptions<MyDbContext> options) : base(options) { }
+        public LibraryContext(DbContextOptions<LibraryContext> options) : base(options) { }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

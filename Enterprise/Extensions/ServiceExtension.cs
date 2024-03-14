@@ -16,7 +16,7 @@ namespace Model.Extensions
 
         public static IServiceCollection AddModelServices(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddDbContext<MyDbContext>(conf =>
+            services.AddDbContext<LibraryContext>(conf =>
             {
                 conf.UseSqlServer(configuration.GetConnectionString("MyDbContext")
             });

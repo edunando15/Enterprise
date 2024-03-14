@@ -10,7 +10,7 @@ namespace Model.Repositories
 {
     public class UserRepository : GenericRepository<User>
     {
-        public UserRepository(MyDbContext context) : base(context)
+        public UserRepository(LibraryContext context) : base(context)
         {
         }
     }

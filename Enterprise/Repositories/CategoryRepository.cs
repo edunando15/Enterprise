@@ -11,7 +11,7 @@ namespace Model.Repositories
     public class CategoryRepository : GenericRepository<Category>
     {
 
-        public CategoryRepository(MyDbContext context) : base(context) { }
+        public CategoryRepository(LibraryContext context) : base(context) { }
 
         
 

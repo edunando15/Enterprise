@@ -10,7 +10,7 @@ namespace Model.Repositories
 {
     public class BookCategoryRepository : GenericRepository<BookCategory>
     {
-        public BookCategoryRepository(MyDbContext context) : base(context)
+        public BookCategoryRepository(LibraryContext context) : base(context)
         {
         }
     }

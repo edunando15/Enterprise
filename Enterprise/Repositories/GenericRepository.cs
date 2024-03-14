@@ -6,9 +6,9 @@ namespace Model.Repositories
     public class GenericRepository<T> where T : class
     {
 
-        protected MyDbContext _context;
+        protected LibraryContext _context;
 
-        public GenericRepository(MyDbContext context)
+        public GenericRepository(LibraryContext context)
         {
             _context = context;
         }
