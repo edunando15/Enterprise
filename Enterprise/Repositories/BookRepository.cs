@@ -1,12 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Model.Context;
+﻿using Model.Context;
 using Model.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+using Application;
+using Esame_Enterprise.Application.Models.Dto;
 namespace Model.Repositories
 {
     public class BookRepository : GenericRepository<Book>
@@ -21,17 +16,20 @@ namespace Model.Repositories
 
         public List<Book> GetByName(string name)
         {
-            return _context.Books.Where(b => b.Name == name).ToList();
+            if (string.IsNullOrWhiteSpace(name)) _context.Books.ToList();
+            return _context.Books.Where(b => b.Name.Contains(name)).ToList();
         }
 
         public List<Book> GetByAuthor(string author)
         {
-            return _context.Books.Where(b => b.Author == author).ToList();
+            if(string.IsNullOrWhiteSpace(author)) return _context.Books.ToList();
+            return _context.Books.Where(b => b.Author.Contains(author)).ToList();
         }
 
         public List<Book> GetByPublisher(string publisher)
         {
-            return _context.Books.Where(b => b.Publisher == publisher).ToList();
+            if(string.IsNullOrWhiteSpace(publisher)) return _context.Books.ToList();
+            return _context.Books.Where(b => b.Publisher.Contains(publisher)).ToList();
         }
 
         public List<Book> GetByPublicationDate(DateTime date)
@@ -41,8 +39,41 @@ namespace Model.Repositories
 
         public List<Book> GetByCategory(string category)
         {
-            return _context.Books.Where(b => b.BookCategories.Any(bc => bc.Category.Name == category)).ToList();
+            if(string.IsNullOrWhiteSpace(category)) return _context.Books.ToList();
+            return _context.Books.Where(b => b.BookCategories.Any(bc => bc.Category.Name.Contains(category))).ToList();
         }
+
+        public List<Book> GetBooks(int from, int num, string orderBy, string filter, string value, out int totalCount)
+        {
+            var books = _context.Books.AsQueryable();
+            totalCount = books.Count();
+            switch(orderBy)
+            {
+                case (nameof(BookDto.Author)): books = books.OrderBy(b => b.Author); break;
+                case (nameof(BookDto.Publisher)): books = books.OrderBy(b => b.Publisher); break;
+                case (nameof(BookDto.PublicationDate)): books = books.OrderBy(b =>b.PublicationDate); break;
+                case (nameof(BookDto.BookCategories)): books = books.OrderBy(b => b.BookCategories.OrderBy(bc => bc.Category.Name)); break;
+                default: books = books.OrderBy(b => b.Id); break;
+            }
+            return books
+                .Skip(from)
+                .Take(num)
+                .ToList();
+        }
+
+        private IQueryable<Book> orderSet(IQueryable<Book> books, string filter)
+        {
+            switch (filter)
+            {
+                case (nameof(BookDto.Author)): books = books.OrderBy(b => b.Author); break;
+                case (nameof(BookDto.Publisher)): books = books.OrderBy(b => b.Publisher); break;
+                case (nameof(BookDto.PublicationDate)): books = books.OrderBy(b => b.PublicationDate); break;
+                case (nameof(BookDto.BookCategories)): books = books.OrderBy(b => b.BookCategories.OrderBy(bc => bc.Category.Name)); break;
+                default: books = books.OrderBy(b => b.Id); break;
+            }
+            return books;
+        }
+
 
     }
 }

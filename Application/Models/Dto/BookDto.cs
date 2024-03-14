@@ -1,11 +1,4 @@
-﻿using Model.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Esame_Enterprise.Application.Dto
+﻿namespace Esame_Enterprise.Application.Models.Dto
 {
     public class BookDto
     {
@@ -19,6 +12,8 @@ namespace Esame_Enterprise.Application.Dto
         public DateTime PublicationDate { get; set; }
 
         public string Publisher { get; set; }
+
+        public ICollection<BookCategoryDto> BookCategories { get; set; }
 
     }
 }
