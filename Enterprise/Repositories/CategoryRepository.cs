@@ -13,7 +13,21 @@ namespace Model.Repositories
 
         public CategoryRepository(LibraryContext context) : base(context) { }
 
-        
+        public List<Category> GetCategories()
+        {
+            return _context.Categories.ToList();
+        }
+
+        public List<Category> GetCategory(int categoryId)
+        {
+            return _context.Categories.Where(c => c.Id == categoryId).ToList();
+        }   
+
+        public List<Category> GetCategoriesByName(string name)
+        {
+            if (string.IsNullOrWhiteSpace(name)) return _context.Categories.ToList();
+            return _context.Categories.Where(c => c.Name.Contains(name)).ToList();
+        }
 
     }
 }

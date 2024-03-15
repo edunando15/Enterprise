@@ -14,9 +14,14 @@ namespace Model.Repositories
         {
         }
 
-        public List<BookCategory> GetBookCategories(int bookId)
+        public List<BookCategory> GetBookCategoriesByBook(int bookId)
         {
             return _context.BookCategories.Where(bc => bc.BookId == bookId).ToList();
+        }
+
+        public List<BookCategory> GetBookCategoriesByCategory(int categoryId)
+        {
+            return _context.BookCategories.Where(bc => bc.CategoryId == categoryId).ToList();
         }
 
     }
