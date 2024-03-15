@@ -32,8 +32,9 @@ namespace Model.Repositories
             return _context.Books.Where(b => b.Publisher.Contains(publisher)).ToList();
         }
 
-        public List<Book> GetByPublicationDate(DateTime date)
+        public List<Book> GetByPublicationDate(DateTime? date)
         {
+            if (date == null) return _context.Books.ToList();
             return _context.Books.Where(b => b.PublicationDate.Equals(date)).ToList();
         }
 
@@ -43,23 +44,20 @@ namespace Model.Repositories
             return _context.Books.Where(b => b.BookCategories.Any(bc => bc.Category.Name.Contains(category))).ToList();
         }
 
-        public List<Book> GetBooks(int from, int num, string orderBy, string filter, string value, out int totalCount)
+        public List<Book> GetBooks(int from, int num, string orderBy, out int totalCount, string author, string publisher, DateTime? publicationDate, CategoryDto category)
         {
             var books = _context.Books.AsQueryable();
             totalCount = books.Count();
-            switch(orderBy)
-            {
-                case (nameof(BookDto.Author)): books = books.OrderBy(b => b.Author); break;
-                case (nameof(BookDto.Publisher)): books = books.OrderBy(b => b.Publisher); break;
-                case (nameof(BookDto.PublicationDate)): books = books.OrderBy(b =>b.PublicationDate); break;
-                case (nameof(BookDto.BookCategories)): books = books.OrderBy(b => b.BookCategories.OrderBy(bc => bc.Category.Name)); break;
-                default: books = books.OrderBy(b => b.Id); break;
-            }
+            if (!string.IsNullOrWhiteSpace(author)) books = books.Where(b => b.Author.Contains(author));
+            if (!string.IsNullOrWhiteSpace(publisher)) books = books.Where(b => b.Publisher.Contains(publisher));
+            if (publicationDate != null) books = books.Where(b => b.PublicationDate.Equals(publicationDate));
+            if (category != null) books = books.Where(b => b.BookCategories.Any(bc => bc.Category.Name.Contains(category.Name)));
             return books
                 .Skip(from)
                 .Take(num)
                 .ToList();
         }
+
 
         private IQueryable<Book> orderSet(IQueryable<Book> books, string filter)
         {
