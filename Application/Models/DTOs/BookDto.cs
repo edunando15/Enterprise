@@ -16,19 +16,31 @@ namespace Esame_Enterprise.Application.Models.Dto
 
         public string Publisher { get; set; }
 
-        public ICollection<BookCategoryDto> BookCategories { get; set; }
+        public ICollection<CategoryDto> Categories { get; set; }
 
         public Book ToEntity()
         {
-            return new Book()
+            Book result = new Book()
             {
                 Id = this.Id,
                 Name = this.Name,
                 Author = this.Author,
                 Publisher = this.Publisher,
                 PublicationDate = this.PublicationDate,
-                BookCategories = this.BookCategories.Select(bc => bc.ToEntity()).ToList()  
+                BookCategories = BuildBookCategories()  
             };
+            foreach(var bc in result.BookCategories) { bc.Book = result; }
+            return result;
+        }
+
+        private ICollection<BookCategory> BuildBookCategories()
+        {
+            var result = new List<BookCategory>();
+            foreach (var category in Categories)
+            {
+                result.Add(new BookCategory() { BookId = this.Id, CategoryId = category.Id });
+            }
+            return result;
         }
 
     }

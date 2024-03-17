@@ -1,7 +1,6 @@
 ﻿using Esame_Enterprise.Application.Abstractions.Services;
 using Esame_Enterprise.Application.Models.Dto;
 using Model.Repositories;
-using Model.Entities;
 
 namespace Esame_Enterprise.Application.Services
 {
@@ -21,17 +20,26 @@ namespace Esame_Enterprise.Application.Services
         public bool AddCategory(CategoryDto category)
         {
             if (repository.GetCategory(category.Name) != null) return false;
-            repository.Insert(category.ToEntity());
-            repository.Save();
+            try
+            {
+                repository.Insert(category.ToEntity());
+                repository.Save();
+            }
+            catch (Exception ex) { return false; }
             return true;
         }
 
         public bool DeleteCategory(CategoryDto category)
         {
             var c = category.ToEntity();
+            if (repository.Get(c.Id) == null) return false;
             if(!bookCategoryRepository.IsDeleatable(c)) return false;
-            repository.Delete(c);
-            repository.Save();
+            try
+            {
+                repository.Delete(c);
+                repository.Save();
+            }
+            catch(Exception ex) { return false; }
             return true;
         }
 

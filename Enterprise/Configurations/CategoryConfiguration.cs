@@ -15,9 +15,13 @@ namespace Model.Configurations
         {
             builder.ToTable("Category");
             builder.HasKey(c => c.Id);
+            builder.Property(c => c.Id)
+                .ValueGeneratedOnAdd();
             builder.Property(c => c.Name)
                 .IsRequired()
                 .HasMaxLength(50);
+            builder.HasIndex(c => c.Name)
+                .IsUnique();
         }
     }
 }

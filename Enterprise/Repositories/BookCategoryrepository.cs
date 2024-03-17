@@ -1,10 +1,5 @@
 ﻿using Model.Context;
 using Model.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Model.Repositories
 {
@@ -21,13 +16,15 @@ namespace Model.Repositories
 
         public List<BookCategory> GetBookCategoriesByCategory(int categoryId)
         {
-            return _context.BookCategories.Where(bc => bc.CategoryId == categoryId).ToList();
+            var r = _context.BookCategories.Where(bc => bc.CategoryId == categoryId).ToList();
+            return r;
         }
 
 
         public bool IsDeleatable(Category category)
         {
-            var c = _context.Categories.Find(category);
+            var c = _context.Categories.Find(category.Id);
+            if(c == null) return false;
             return !_context.BookCategories.Any(bc => bc.CategoryId == c.Id);
         }
 
@@ -42,7 +39,7 @@ namespace Model.Repositories
         public void DeleteBookCategory(Book book)
         {
             var delete = _context.BookCategories.Where(bc => bc.BookId == book.Id);
-            _context.BookCategories.RemoveRange(delete)
+            _context.BookCategories.RemoveRange(delete);
         }
 
     }

@@ -1,8 +1,9 @@
-﻿using Model.Entities;
+﻿using Esame_Enterprise.Application.Abstractions.Models.Dto;
+using Model.Entities;
 
 namespace Esame_Enterprise.Application.Models.Dto
 {
-    public class BookCategoryDto
+    public class BookCategoryDto : GenericDto<BookCategory>
     {
 
         public int BookId { get; set; }

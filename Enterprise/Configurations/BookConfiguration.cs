@@ -10,6 +10,8 @@ namespace Model.Configurations
         {
             builder.ToTable("Book");
             builder.HasKey(b => b.Id);
+            builder.Property(b => b.Id)
+                .ValueGeneratedOnAdd();
             builder.Property(b => b.Name).HasMaxLength(50);
             builder.Property(b => b.Author).HasMaxLength(50);
             builder.Property(b => b.Publisher).HasMaxLength(50);

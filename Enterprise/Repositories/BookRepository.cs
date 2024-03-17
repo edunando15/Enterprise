@@ -42,11 +42,10 @@ namespace Model.Repositories
             return _context.Books.Where(b => b.BookCategories.Any(bc => bc.Category.Name.Contains(category))).ToList();
         }
 
-        public List<Book> GetBooks(int from, int num, string orderBy, string filter, string value, out int totalCount, string author, string publisher, DateTime? publicationDate, Category category)
+        public List<Book> GetBooks(int from, int num, string orderBy, out int totalCount, string author, string publisher, DateTime? publicationDate, Category category)
         {
             var books = _context.Books.AsQueryable();
             totalCount = books.Count();
-            FilterSet(books, filter, value);
             OrderSet(books, orderBy);
             if (!string.IsNullOrWhiteSpace(author)) books = books.Where(b => b.Author.Contains(author));
             if (!string.IsNullOrWhiteSpace(publisher)) books = books.Where(b => b.Publisher.Contains(publisher));
@@ -58,34 +57,11 @@ namespace Model.Repositories
                 .ToList();
         }
 
-        /// <summary>
-        /// Filters a set according to the given parameters.
-        /// </summary>
-        /// <param name="books">The set to filter.</param>
-        /// <param name="filter">The type of filter.</param>
-        /// <param name="value">The value of the filter.</param>
-        /// <returns>The set filtered according to the parameters.</returns>
-        private IQueryable<Book> FilterSet(IQueryable<Book> books, string filter, string value)
+        public override void Delete(Book entity)
         {
-            if(!string.IsNullOrWhiteSpace(value))
-            {
-                switch (filter)
-                {
-                    case (nameof(Book.Author)): books = books.Where(b => b.Author.Contains(value)); break;
-                    case (nameof(Book.Publisher)): books = books.Where(b => b.Publisher.Contains(value)); break;
-                    case (nameof(Book.BookCategories)): books = books.Where(b => b.BookCategories.Any(bc => bc.Category.Name.Contains(value))); break;
-                    case (nameof(Book.PublicationDate)):
-                        try
-                        {
-                            books = books.Where(b => b.PublicationDate.Equals(DateTime.Parse(value))); break;
-                        }
-                        catch(Exception ex) { break; }
-                    default: break;
-                }
-            }
-            return books;
+            var e = Get(entity.Id);
+            if(e != null) _context.Remove(e);
         }
-
 
         private IQueryable<Book> OrderSet(IQueryable<Book> books, string filter)
         {

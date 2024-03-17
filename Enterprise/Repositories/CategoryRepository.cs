@@ -1,10 +1,5 @@
 ﻿using Model.Context;
 using Model.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Model.Repositories
 {
@@ -27,6 +22,12 @@ namespace Model.Repositories
         {
             if (string.IsNullOrWhiteSpace(name)) return _context.Categories.ToList();
             return _context.Categories.Where(c => c.Name.Contains(name)).ToList();
+        }
+
+        public override void Delete(Category category)
+        {
+            var c = Get(category.Id);
+            _context.Remove(c);
         }
 
     }

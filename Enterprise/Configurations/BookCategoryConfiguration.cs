@@ -13,7 +13,8 @@ namespace Model.Configurations
             builder.HasKey(b => new { b.BookId, b.CategoryId });
             builder.HasOne(bc => bc.Book)
                 .WithMany(b => b.BookCategories)
-                .HasForeignKey(bc => bc.BookId);
+                .HasForeignKey(bc => bc.BookId)
+                .OnDelete(DeleteBehavior.Cascade);
             builder.HasOne(bc => bc.Category)
                 .WithMany(c => c.BookCategories)
                 .HasForeignKey(bc => bc.CategoryId);

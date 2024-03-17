@@ -7,4 +7,9 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Application\Esame_Enterprise.Application.csproj" />
+    <ProjectReference Include="..\Enterprise\Esame_Enterprise.Models.csproj" />
+  </ItemGroup>
+
 </Project>
