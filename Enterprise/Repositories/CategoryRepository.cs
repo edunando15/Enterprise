@@ -18,9 +18,9 @@ namespace Model.Repositories
             return _context.Categories.ToList();
         }
 
-        public List<Category> GetCategory(int categoryId)
+        public Category? GetCategory(string categoryName)
         {
-            return _context.Categories.Where(c => c.Id == categoryId).ToList();
+            return _context.Categories.Where(c => c.Name == categoryName).FirstOrDefault();
         }   
 
         public List<Category> GetCategoriesByName(string name)

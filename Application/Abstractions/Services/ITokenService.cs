@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Esame_Enterprise.Application.Models.Requests;
 
 namespace Esame_Enterprise.Application.Abstractions.Services
 {
-    public class ITokenService
+    public interface ITokenService
     {
+
+        string CreateToken(CreateTokenRequest request);
+
     }
 }

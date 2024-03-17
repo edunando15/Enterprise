@@ -1,7 +1,5 @@
 ﻿using Model.Context;
 using Model.Entities;
-using Application;
-using Esame_Enterprise.Application.Models.Dto;
 namespace Model.Repositories
 {
     public class BookRepository : GenericRepository<Book>
@@ -44,10 +42,12 @@ namespace Model.Repositories
             return _context.Books.Where(b => b.BookCategories.Any(bc => bc.Category.Name.Contains(category))).ToList();
         }
 
-        public List<Book> GetBooks(int from, int num, string orderBy, out int totalCount, string author, string publisher, DateTime? publicationDate, CategoryDto category)
+        public List<Book> GetBooks(int from, int num, string orderBy, string filter, string value, out int totalCount, string author, string publisher, DateTime? publicationDate, Category category)
         {
             var books = _context.Books.AsQueryable();
             totalCount = books.Count();
+            FilterSet(books, filter, value);
+            OrderSet(books, orderBy);
             if (!string.IsNullOrWhiteSpace(author)) books = books.Where(b => b.Author.Contains(author));
             if (!string.IsNullOrWhiteSpace(publisher)) books = books.Where(b => b.Publisher.Contains(publisher));
             if (publicationDate != null) books = books.Where(b => b.PublicationDate.Equals(publicationDate));
@@ -58,20 +58,47 @@ namespace Model.Repositories
                 .ToList();
         }
 
-
-        private IQueryable<Book> orderSet(IQueryable<Book> books, string filter)
+        /// <summary>
+        /// Filters a set according to the given parameters.
+        /// </summary>
+        /// <param name="books">The set to filter.</param>
+        /// <param name="filter">The type of filter.</param>
+        /// <param name="value">The value of the filter.</param>
+        /// <returns>The set filtered according to the parameters.</returns>
+        private IQueryable<Book> FilterSet(IQueryable<Book> books, string filter, string value)
         {
-            switch (filter)
+            if(!string.IsNullOrWhiteSpace(value))
             {
-                case (nameof(BookDto.Author)): books = books.OrderBy(b => b.Author); break;
-                case (nameof(BookDto.Publisher)): books = books.OrderBy(b => b.Publisher); break;
-                case (nameof(BookDto.PublicationDate)): books = books.OrderBy(b => b.PublicationDate); break;
-                case (nameof(BookDto.BookCategories)): books = books.OrderBy(b => b.BookCategories.OrderBy(bc => bc.Category.Name)); break;
-                default: books = books.OrderBy(b => b.Id); break;
+                switch (filter)
+                {
+                    case (nameof(Book.Author)): books = books.Where(b => b.Author.Contains(value)); break;
+                    case (nameof(Book.Publisher)): books = books.Where(b => b.Publisher.Contains(value)); break;
+                    case (nameof(Book.BookCategories)): books = books.Where(b => b.BookCategories.Any(bc => bc.Category.Name.Contains(value))); break;
+                    case (nameof(Book.PublicationDate)):
+                        try
+                        {
+                            books = books.Where(b => b.PublicationDate.Equals(DateTime.Parse(value))); break;
+                        }
+                        catch(Exception ex) { break; }
+                    default: break;
+                }
             }
             return books;
         }
 
+
+        private IQueryable<Book> OrderSet(IQueryable<Book> books, string filter)
+        {
+            switch (filter)
+            {
+                case (nameof(Book.Author)): books = books.OrderBy(b => b.Author); break;
+                case (nameof(Book.Publisher)): books = books.OrderBy(b => b.Publisher); break;
+                case (nameof(Book.PublicationDate)): books = books.OrderBy(b => b.PublicationDate); break;
+                case (nameof(Book.BookCategories)): books = books.OrderBy(b => b.BookCategories.OrderBy(bc => bc.Category.Name)); break;
+                default: books = books.OrderBy(b => b.Id); break;
+            }
+            return books;
+        }
 
     }
 }

@@ -1,12 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Esame_Enterprise.Application.Models.Dto;
 
 namespace Esame_Enterprise.Application.Abstractions.Services
 {
-    public class ICategoryService
+    public interface ICategoryService
     {
+
+        List<CategoryDto> GetCategories();
+
+        bool AddCategory(CategoryDto category);
+
+        bool DeleteCategory(CategoryDto id);
+
+        CategoryDto? GetCategory(string name);
+
     }
 }

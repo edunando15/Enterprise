@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Model.Entities;
 
 namespace Esame_Enterprise.Application.Models.Dto
 {
@@ -16,6 +12,17 @@ namespace Esame_Enterprise.Application.Models.Dto
         public CategoryDto Category { get; set; }
 
         public BookDto Book { get; set; }
+
+        public BookCategory ToEntity()
+        {
+            return new BookCategory()
+            {
+                BookId = BookId,
+                CategoryId = CategoryId,
+                Category = Category.ToEntity(),
+                Book = Book.ToEntity()
+            };
+        }
 
     }
 }

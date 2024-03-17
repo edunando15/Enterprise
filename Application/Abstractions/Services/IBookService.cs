@@ -1,13 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Esame_Enterprise.Application.Models.Dto;
 
 namespace Esame_Enterprise.Application.Abstractions.Services
 {
-    public class IBookService
+    public interface IBookService
     {
+        bool AddBook(BookDto book);
+
+        void ModifyBook(BookDto book);
+
+        bool DeleteBook(BookDto book);
+
+        IEnumerable<BookDto> GetBooks(int from, int amount, out int totalAmount); 
 
     }
 }

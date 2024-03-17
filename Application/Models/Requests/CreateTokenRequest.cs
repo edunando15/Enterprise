@@ -4,18 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Model.Entities
+namespace Esame_Enterprise.Application.Models.Requests
 {
-    public class User
+    public class CreateTokenRequest
     {
 
-        public int Id { get; set; }
-
         public string Email { get; set; }
-
-        public string Name { get; set; }
-
-        public string Surname { get; set; }
 
         public string Password { get; set; }
 

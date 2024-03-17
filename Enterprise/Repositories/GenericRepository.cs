@@ -23,6 +23,11 @@ namespace Model.Repositories
             return _context.Set<T>().Find(id);
         }
 
+        public virtual T? Get(T entity)
+        {
+            return _context.Set<T>().Find(entity);
+        }
+
         /// <summary>
         /// Method used to insert an entity.
         /// </summary>

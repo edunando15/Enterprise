@@ -1,23 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Esame_Enterprise.Application.Models.Dto;
 
 namespace Esame_Enterprise.Application.Abstractions.Services
 {
-    public class IUserService
+    public interface IUserService
     {
 
-        public bool SignUp(string username, string password)
-        {
-            return false;
-        }
+        public bool SignUp(UserDto user);
 
-        public bool Login(string email,  string password)
-        {
-            return false;
-        }
+        public bool LogIn(string email, string password);
 
     }
 }
