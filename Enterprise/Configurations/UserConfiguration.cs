@@ -13,8 +13,12 @@ namespace Model.Configurations
             builder.Property(u => u.Id)
                 .ValueGeneratedOnAdd();
             builder.Property(u => u.Name).HasMaxLength(50);
-            builder.Property(u => u.Email).HasMaxLength(50);
-            builder.Property(u => u.Password).HasMaxLength(50);
+            builder.Property(u => u.Email).HasMaxLength(50)
+                .IsRequired();
+            builder.HasIndex(u => u.Id)
+                .IsUnique();
+            builder.Property(u => u.Password).HasMaxLength(50)
+                .IsRequired();
         }
     }
 }

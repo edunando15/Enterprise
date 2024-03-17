@@ -1,8 +1,16 @@
-﻿using Esame_Enterprise.Application.Models.Dto;
+﻿using Esame_Enterprise.Application.Extensions;
+using Esame_Enterprise.Application.Models.Dto;
 using Esame_Enterprise.Application.Services;
+using Esame_Enterprise.Web.Extensions;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.DependencyInjection;
 using Model.Context;
 using Model.Entities;
+using Model.Extensions;
 using Model.Repositories;
+
+
+
 
 LibraryContext context = new LibraryContext();
 BookRepository bookRepository = new BookRepository(context);
@@ -44,3 +52,13 @@ foreach (var item in res)
     Console.WriteLine(item.PublicationDate);
 }
 Console.WriteLine(tot);
+
+var builder = WebApplication.CreateBuilder(args);
+builder.Services
+    .AddWebServices()
+    .AddSecurityServices(builder.Configuration)
+    .AddModelServices(builder.Configuration)
+    .AddApplicationServices();
+var app  = builder.Build();
+app.AddWebMiddleware();
+app.Run();

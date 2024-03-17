@@ -1,6 +1,7 @@
 ﻿using Esame_Enterprise.Application.Abstractions.Services;
 using Esame_Enterprise.Application.Models.Dto;
 using Esame_Enterprise.Application.Options;
+using Microsoft.Extensions.Options;
 using Model.Repositories;
 
 namespace Esame_Enterprise.Application.Services
@@ -12,14 +13,15 @@ namespace Esame_Enterprise.Application.Services
 
         private readonly JwtAuthenticationOption jwtOptions;
 
-        public UserService(UserRepository repository, JwtAuthenticationOption jwtOptions)
+        public UserService(UserRepository repository, IOptions<JwtAuthenticationOption> jwtOptions)
         {
             this.repository = repository;
-            this.jwtOptions = jwtOptions;
+            this.jwtOptions = jwtOptions.Value;
         }
 
         public bool LogIn(string email, string password)
         {
+            var user = repository.GetUser(email, password);
             throw new NotImplementedException();
         }
 

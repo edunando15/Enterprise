@@ -26,7 +26,7 @@ namespace Esame_Enterprise.Application.Services
 
         public bool AddBook(BookDto book)
         {
-            if (!GetCategories(book.Categories)) return false; 
+            if (!GetCategories(book.Categories)) return false; // Aggiungi solo libri con categorie gia' esistenti.
             var realBook = book.ToEntity();
             bookRepository.Insert(realBook);
             foreach (var bc in realBook.BookCategories)

@@ -9,7 +9,7 @@ namespace Esame_Enterprise.Application.Extensions
     public static class ServiceExtension
     {
 
-        public static IServiceCollection AddApplicationServices(this IServiceCollection services, IConfiguration configuration) 
+        public static IServiceCollection AddApplicationServices(this IServiceCollection services) 
         {
             services.AddValidatorsFromAssembly(
                 AppDomain
