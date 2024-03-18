@@ -7,7 +7,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Esame_Enterprise.Models", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Esame_Enterprise.Application", "Application\Esame_Enterprise.Application.csproj", "{758262F3-0355-41CE-A010-2BC083511592}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Esame_Enterprise.Web", "Web\Esame_Enterprise.Web.csproj", "{E512ABC0-3C5D-47D8-B49E-1F04F1C6F231}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Esame_Enterprise.Web", "WebAPI\Esame_Enterprise.Web.csproj", "{5FDB20CB-7E7B-48C4-905A-331E56B6C2D6}"
+	ProjectSection(ProjectDependencies) = postProject
+		{758262F3-0355-41CE-A010-2BC083511592} = {758262F3-0355-41CE-A010-2BC083511592}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,10 +26,10 @@ Global
 		{758262F3-0355-41CE-A010-2BC083511592}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{758262F3-0355-41CE-A010-2BC083511592}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{758262F3-0355-41CE-A010-2BC083511592}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E512ABC0-3C5D-47D8-B49E-1F04F1C6F231}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E512ABC0-3C5D-47D8-B49E-1F04F1C6F231}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E512ABC0-3C5D-47D8-B49E-1F04F1C6F231}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E512ABC0-3C5D-47D8-B49E-1F04F1C6F231}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5FDB20CB-7E7B-48C4-905A-331E56B6C2D6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5FDB20CB-7E7B-48C4-905A-331E56B6C2D6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5FDB20CB-7E7B-48C4-905A-331E56B6C2D6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5FDB20CB-7E7B-48C4-905A-331E56B6C2D6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

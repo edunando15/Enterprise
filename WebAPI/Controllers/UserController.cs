@@ -1,9 +1,14 @@
 ﻿using Esame_Enterprise.Application.Abstractions.Services;
 using Esame_Enterprise.Application.Models.Dto;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Esame_Enterprise.Web.Controllers
 {
+    [ApiController]
+    [Route("api/v1/[controller]")]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class UserController : ControllerBase
     {
 
