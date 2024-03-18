@@ -25,5 +25,13 @@ namespace Esame_Enterprise.Web.Controllers
             if (userService.SignUp(userDto)) return Ok();
             return BadRequest();
         }
+
+        [HttpPost]
+        public IActionResult LogIn(string email, string password)
+        {
+            var response = userService.LogIn(email, password);
+            if (response) return Ok(response);
+            return BadRequest();
+        }
     }
 }
