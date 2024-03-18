@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Esame_Enterprise.Web.Controllers
 {
     [ApiController]
-    [Route("api/v1/[controller]")]
+    [Route("api/v1/[controller]/authentication")]
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class UserController : ControllerBase
     {
@@ -20,6 +20,7 @@ namespace Esame_Enterprise.Web.Controllers
         }
 
         [HttpPost]
+        [Route("SignUp")]
         public IActionResult SignUp(UserDto userDto)
         {
             if (userService.SignUp(userDto)) return Ok();
@@ -27,11 +28,11 @@ namespace Esame_Enterprise.Web.Controllers
         }
 
         [HttpPost]
+        [Route("LogIn")]
         public IActionResult LogIn(string email, string password)
         {
-            var response = userService.LogIn(email, password);
-            if (response) return Ok(response);
-            return BadRequest();
+            if(userService.LogIn(email, password)) return Ok();
+            else return BadRequest();
         }
     }
 }
