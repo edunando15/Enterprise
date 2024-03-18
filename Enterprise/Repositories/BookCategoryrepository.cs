@@ -36,9 +36,9 @@ namespace Model.Repositories
             return true;
         }
 
-        public void DeleteBookCategory(Book book)
+        public void DeleteBookCategoryByBookId(int bookId)
         {
-            var delete = _context.BookCategories.Where(bc => bc.BookId == book.Id);
+            var delete = _context.BookCategories.Where(bc => bc.BookId == bookId);
             _context.BookCategories.RemoveRange(delete);
         }
 

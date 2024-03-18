@@ -70,7 +70,23 @@ namespace Esame_Enterprise.Application.Services
 
         public void ModifyBook(BookDto book)
         {
-            bookRepository.Modify(book.ToEntity());
+            if (!GetCategories(book.Categories)) return; // Aggiungi solo libri con categorie gia' esistenti.
+            var newCategories = book.Categories.ToList();
+            var realBook = book.ToEntity();
+            bookRepository.Modify(realBook);
+            if(newCategories.Count > 0)
+            {
+                var bookCategories = bookCategoryRepository.GetBookCategoriesByBook(realBook.Id);
+                foreach (var bookCategory in bookCategories)
+                {
+                    bookCategoryRepository.DeleteBookCategoryByBookId(realBook.Id);
+                }
+                foreach (var category in newCategories)
+                {
+                    bookCategoryRepository.Insert(new BookCategory() { BookId = realBook.Id, CategoryId = category.Id});
+                }
+                bookCategoryRepository.Save();
+            }
             bookRepository.Save();
         }
 
