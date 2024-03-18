@@ -2,7 +2,6 @@
 using Esame_Enterprise.Application.Models.Dto;
 using Model.Repositories;
 using Model.Entities;
-using Castle.DynamicProxy.Generators.Emitters.SimpleAST;
 
 namespace Esame_Enterprise.Application.Services
 {

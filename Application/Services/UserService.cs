@@ -22,7 +22,8 @@ namespace Esame_Enterprise.Application.Services
         public bool LogIn(string email, string password)
         {
             var user = repository.GetUser(email, password);
-            throw new NotImplementedException();
+            if (user == null) return false;
+            else return true;
         }
 
         public bool SignUp(UserDto user)
