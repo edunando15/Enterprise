@@ -20,7 +20,11 @@ namespace Model.Context
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer("data source=localhost;Initial catalog=Enterprise;User Id=enterprise;Password=enterprise;TrustServerCertificate=True");
+            optionsBuilder.UseSqlServer("data source=localhost;Initial catalog=Enterprise;Integrated Security=True;TrustServerCertificate=True", builder =>
+            {
+                builder.EnableRetryOnFailure(5, TimeSpan.FromSeconds(10), null);
+            });
+            base.OnConfiguring(optionsBuilder);
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

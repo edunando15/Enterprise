@@ -29,14 +29,13 @@ namespace Esame_Enterprise.Application.Services
             return true;
         }
 
-        public bool DeleteCategory(CategoryDto category)
+        public bool DeleteCategory(int categoryId)
         {
-            var c = category.ToEntity();
-            if (repository.Get(c.Id) == null) return false;
-            if(!bookCategoryRepository.IsDeleatable(c)) return false;
+            if (repository.Get(categoryId) == null) return false;
+            if(!bookCategoryRepository.IsDeleatable(categoryId)) return false;
             try
             {
-                repository.Delete(c);
+                repository.Delete(categoryId);
                 repository.Save();
             }
             catch(Exception ex) { return false; }

@@ -57,9 +57,9 @@ namespace Model.Repositories
                 .ToList();
         }
 
-        public override void Delete(Book entity)
+        public override void Delete(int id)
         {
-            var e = Get(entity.Id);
+            var e = Get(id);
             if(e != null) _context.Remove(e);
         }
 

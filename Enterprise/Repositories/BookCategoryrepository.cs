@@ -21,17 +21,17 @@ namespace Model.Repositories
         }
 
 
-        public bool IsDeleatable(Category category)
+        public bool IsDeleatable(int categoryId)
         {
-            var c = _context.Categories.Find(category.Id);
+            var c = _context.Categories.Find(categoryId);
             if(c == null) return false;
             return !_context.BookCategories.Any(bc => bc.CategoryId == c.Id);
         }
 
-        public bool DeleteBookCategory(Category category)
+        public bool DeleteBookCategory(int categoryId)
         {
-            if (!IsDeleatable(category)) return false;
-            var bookCategoriesToDelete = _context.BookCategories.Where(bc => bc.CategoryId == category.Id);
+            if (!IsDeleatable(categoryId)) return false;
+            var bookCategoriesToDelete = _context.BookCategories.Where(bc => bc.CategoryId == categoryId);
             _context.BookCategories.RemoveRange(bookCategoriesToDelete);
             return true;
         }

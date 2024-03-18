@@ -1,4 +1,5 @@
 ﻿using Esame_Enterprise.Application.Abstractions.Models.Dto;
+using Esame_Enterprise.Application.Models.Requests;
 using Model.Entities;
 
 namespace Esame_Enterprise.Application.Models.Dto
@@ -20,17 +21,16 @@ namespace Esame_Enterprise.Application.Models.Dto
 
         public BookDto() { }
 
-        public BookDto(Book book)
+        public BookDto(ActionBookRequest book)
         {
-            Id = book.Id;
             Name = book.Name;
             Author = book.Author;
             PublicationDate = book.PublicationDate;
             Publisher = book.Publisher;
             Categories = new List<CategoryDto>();
-            foreach (var bc in book.BookCategories)
+            foreach (var category in book.Categories)
             {
-                Categories.Add(new CategoryDto(bc.Category));
+                Categories.Add(new CategoryDto() {Name = category});
             }
         }
 

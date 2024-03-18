@@ -37,11 +37,10 @@ namespace Esame_Enterprise.Application.Services
             return true;
         }
 
-        public bool DeleteBook(BookDto book)
+        public bool DeleteBook(int Id)
         {
-            var b = book.ToEntity();
-            if (bookRepository.Get(b.Id) == null) return false;
-            bookRepository.Delete(b);
+            if (bookRepository.Get(Id) == null) return false;
+            bookRepository.Delete(Id);
             bookRepository.Save();
             return true;
         }

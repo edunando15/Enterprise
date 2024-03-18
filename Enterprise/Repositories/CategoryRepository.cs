@@ -24,9 +24,9 @@ namespace Model.Repositories
             return _context.Categories.Where(c => c.Name.Contains(name)).ToList();
         }
 
-        public override void Delete(Category category)
+        public override void Delete(int categoryId)
         {
-            var c = Get(category.Id);
+            var c = Get(categoryId);
             _context.Remove(c);
         }
 

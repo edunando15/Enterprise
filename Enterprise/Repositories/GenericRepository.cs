@@ -46,9 +46,9 @@ namespace Model.Repositories
             _context.Entry(entity).State = EntityState.Modified;
         }
 
-        public virtual void Delete(T entity)
+        public virtual void Delete(int id)
         {
-            _context.Entry(entity).State = EntityState.Deleted;
+            _context.Entry(id).State = EntityState.Deleted;
         }
 
         public void Save()

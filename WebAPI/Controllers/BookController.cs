@@ -29,23 +29,25 @@ namespace Esame_Enterprise.Web.Controllers
         [Route("AddBook")]
         public IActionResult AddBook(ActionBookRequest book)
         {
-            if (bookService.AddBook(new BookDto(book.ToEntity()))) return Ok();
+            if (bookService.AddBook(new BookDto(book))) return Ok();
             return BadRequest();
         }
 
         [HttpDelete]
         [Route("DeleteBook")]
-        public IActionResult DeleteBook(ActionBookRequest book)
+        public IActionResult DeleteBook(int bookId)
         {
-            if (bookService.DeleteBook(new BookDto(book.ToEntity()))) return Ok();
+            if (bookService.DeleteBook(bookId)) return Ok();
             return BadRequest();
         }
 
         [HttpPut]
         [Route("ModifyBook")]
-        public IActionResult ModifyBook(BookDto book)
+        public IActionResult ModifyBook(int id, ActionBookRequest book)
         {
-            bookService.ModifyBook(book);
+            var realBook = new BookDto(book);
+            realBook.Id = id;
+            bookService.ModifyBook(realBook);
             return Ok();
         }
     }
