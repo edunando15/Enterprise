@@ -18,6 +18,22 @@ namespace Esame_Enterprise.Application.Models.Dto
 
         public ICollection<CategoryDto> Categories { get; set; }
 
+        public BookDto() { }
+
+        public BookDto(Book book)
+        {
+            Id = book.Id;
+            Name = book.Name;
+            Author = book.Author;
+            PublicationDate = book.PublicationDate;
+            Publisher = book.Publisher;
+            Categories = new List<CategoryDto>();
+            foreach (var bc in book.BookCategories)
+            {
+                Categories.Add(new CategoryDto(bc.Category));
+            }
+        }
+
         public Book ToEntity()
         {
             Book result = new Book()
