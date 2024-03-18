@@ -1,4 +1,5 @@
 ﻿using Esame_Enterprise.Application.Abstractions.Models.Dto;
+using Esame_Enterprise.Application.Models.Requests;
 using Model.Entities;
 
 namespace Esame_Enterprise.Application.Models.Dto
@@ -12,9 +13,8 @@ namespace Esame_Enterprise.Application.Models.Dto
 
         public CategoryDto() { }
 
-        public CategoryDto(Category category)
+        public CategoryDto(CreateCategoryRequest category)
         {
-            Id = category.Id;
             Name = category.Name;
         }
 

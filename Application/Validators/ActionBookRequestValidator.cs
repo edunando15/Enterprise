@@ -3,9 +3,9 @@ using Model.Entities;
 
 namespace Esame_Enterprise.Application.Validators
 {
-    public class CreateBookRequestValidator : AbstractValidator<Book>
+    public class ActionBookRequestValidator : AbstractValidator<Book>
     {
-        public CreateBookRequestValidator()
+        public ActionBookRequestValidator()
         {
             RuleFor(x => x.Name)
                 .NotEmpty().WithMessage("Title can't be empty")
