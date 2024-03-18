@@ -6,8 +6,6 @@ namespace Esame_Enterprise.Application.Models.Dto
     public class UserDto : GenericDto<User>
     {
 
-        public int Id { get; set; }
-
         public string Email { get; set; }
 
         public string Name { get; set; }
@@ -20,7 +18,6 @@ namespace Esame_Enterprise.Application.Models.Dto
         {
             return new User()
             {
-                Id = this.Id,
                 Email = this.Email,
                 Name = this.Name,
                 Surname = this.Surname,
