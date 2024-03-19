@@ -6,7 +6,7 @@ namespace Esame_Enterprise.Application.Extensions
     public static class ValidationExtension
     {
 
-        public static void RegExt<T, TProperty>(this IRuleBuilderOptions<T, TProperty> ruleBuilder, string regEx, string validationMessage)
+        public static void RegEx<T, TProperty>(this IRuleBuilderOptions<T, TProperty> ruleBuilder, string regEx, string validationMessage)
         {
             ruleBuilder.Custom((value, context) =>
             {

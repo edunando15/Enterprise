@@ -23,13 +23,15 @@ namespace Model.Repositories
 
         public bool IsDeleatable(int categoryId)
         {
-            var c = _context.Categories.Find(categoryId);
-            if(c == null) return false;
-            return !_context.BookCategories.Any(bc => bc.CategoryId == c.Id);
+            //var c = _context.Categories.Find(categoryId);
+            //if(c == null) return false;
+            return !_context.BookCategories.Any(bc => bc.CategoryId == categoryId);
         }
 
         public bool DeleteBookCategory(int categoryId)
         {
+            var c = _context.Categories.Find(categoryId);
+            if (c == null) return false;
             if (!IsDeleatable(categoryId)) return false;
             var bookCategoriesToDelete = _context.BookCategories.Where(bc => bc.CategoryId == categoryId);
             _context.BookCategories.RemoveRange(bookCategoriesToDelete);
@@ -40,6 +42,11 @@ namespace Model.Repositories
         {
             var delete = _context.BookCategories.Where(bc => bc.BookId == bookId);
             _context.BookCategories.RemoveRange(delete);
+        }
+
+        public override bool Exists(int categoryId)
+        {
+            return _context.BookCategories.Any(bc => bc.CategoryId == categoryId);
         }
 
     }

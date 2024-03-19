@@ -17,6 +17,11 @@ namespace Model.Repositories
             return _context.Users.Where(u => u.Email == email && u.Password == password).FirstOrDefault();
         }
 
+        public User? GetUser(string email)
+        {
+            return _context.Users.Where(u => u.Email == email).FirstOrDefault();
+        }
+
         public bool UserExists(string email)
         {
             return _context.Users.Any(u => u.Email == email);

@@ -19,11 +19,11 @@ namespace Esame_Enterprise.Application.Services
             this.jwtOptions = jwtOptions.Value;
         }
 
-        public bool LogIn(string email, string password)
+        public UserDto? LogIn(string email, string password)
         {
             var user = repository.GetUser(email, password);
-            if (user == null) return false;
-            else return true;
+            if(user != null) return new UserDto() { Email = user.Email, Name = user.Name, Surname = user.Surname, Password = user.Password };
+            return null;
         }
 
         public bool SignUp(UserDto user)
@@ -33,5 +33,13 @@ namespace Esame_Enterprise.Application.Services
             repository.Save();
             return true;
         }
+
+        public UserDto? GetUser(string email)
+        {
+            var user = repository.GetUser(email);
+            if(user != null) return new UserDto() { Name = user.Name, Surname = user.Surname, Email = user.Email, Password = user.Password };
+            else return null;
+        }
+
     }
 }

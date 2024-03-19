@@ -7,7 +7,9 @@ namespace Esame_Enterprise.Application.Abstractions.Services
 
         public bool SignUp(UserDto user);
 
-        public bool LogIn(string email, string password);
+        public UserDto? LogIn(string email, string password);
+
+        public abstract UserDto? GetUser(string email);
 
     }
 }

@@ -34,9 +34,9 @@ namespace Esame_Enterprise.Web.Controllers
 
         [HttpDelete]
         [Route("DeleteCategory")]
-        public IActionResult DeleteCategory(int categoryId)
+        public IActionResult DeleteCategory(DeleteCategoryRequest request)
         {
-            if (categoryService.DeleteCategory(categoryId)) return Ok();
+            if (categoryService.DeleteCategory(request.Id)) return Ok();
             return BadRequest();
         }
 
