@@ -18,6 +18,12 @@ namespace Esame_Enterprise.Application.Models.Dto
             Name = category.Name;
         }
 
+        public CategoryDto(Category category)
+        {
+            Id = category.Id;
+            Name = category.Name;
+        }
+
         public Category ToEntity()
         {
             return new Category

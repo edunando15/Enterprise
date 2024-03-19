@@ -25,7 +25,7 @@ namespace Esame_Enterprise.Application.Services
 
         public bool AddBook(BookDto book)
         {
-            if (!GetCategories(book.Categories)) return false; // Aggiungi solo libri con categorie gia' esistenti.
+            if (!SetCategoriesId(book.Categories)) return false; // Aggiungi solo libri con categorie gia' esistenti.
             var realBook = book.ToEntity();
             bookRepository.Insert(realBook);
             foreach (var bc in realBook.BookCategories)
@@ -45,9 +45,9 @@ namespace Esame_Enterprise.Application.Services
             return true;
         }
 
-        public IEnumerable<BookDto> GetBooks(int from, int num, string orderBy, out int totalCount, string author, string publisher, DateTime? publicationDate, CategoryDto category)
+        public IEnumerable<BookDto> GetBooks(int from, int num, string orderBy, out int totalCount, string? name, string? author, string? publisher, DateTime? publicationDate, CategoryDto? category)
         {
-            var res = bookRepository.GetBooks(from, num, orderBy, out totalCount, author, publisher, publicationDate, category != null ? category.ToEntity() : null);
+            var res = bookRepository.GetBooks(from, num, orderBy, out totalCount, name, author, publisher, publicationDate, category != null ? category.ToEntity() : null);
             return GetDtos(res);
         }
 
@@ -62,15 +62,27 @@ namespace Esame_Enterprise.Application.Services
                     Name = book.Name,
                     Author = book.Author,
                     PublicationDate = book.PublicationDate,
-                    Publisher = book.Publisher
+                    Publisher = book.Publisher,
+                    Categories = getCategories(bookCategoryRepository.GetBookCategoriesByBook(book.Id))
                 });
             }
             return res;
         }
 
+        private ICollection<CategoryDto> getCategories(List<BookCategory> bookCategories)
+        {
+            var res = new List<CategoryDto>();
+            foreach (var bookCategory in bookCategories)
+            {
+                res.Add(new CategoryDto() { Id = bookCategory.CategoryId });
+            }
+            SetCategoriesName(res);
+            return res;
+        }
+
         public void ModifyBook(BookDto book)
         {
-            if (!GetCategories(book.Categories)) return; // Aggiungi solo libri con categorie gia' esistenti.
+            if (!SetCategoriesId(book.Categories)) return; // Modifico solo libri con categorie gia' esistenti.
             var newCategories = book.Categories.ToList();
             var realBook = book.ToEntity();
             bookRepository.Modify(realBook);
@@ -90,7 +102,7 @@ namespace Esame_Enterprise.Application.Services
             bookRepository.Save();
         }
 
-        private bool GetCategories(ICollection<CategoryDto> categories)
+        private bool SetCategoriesId(ICollection<CategoryDto> categories)
         {
             foreach (var category in categories)
             {
@@ -99,6 +111,15 @@ namespace Esame_Enterprise.Application.Services
                 else return false;
             }
             return true;
+        }
+
+        private void SetCategoriesName(ICollection<CategoryDto> categories)
+        {
+            foreach (var category in categories)
+            {
+                var cat = categoryRepository.Get(category.Id);
+                if (cat != null) category.Name = cat.Name;
+            }
         }
 
     }

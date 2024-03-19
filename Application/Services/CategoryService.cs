@@ -25,7 +25,7 @@ namespace Esame_Enterprise.Application.Services
                 repository.Insert(category.ToEntity());
                 repository.Save();
             }
-            catch (Exception ex) { return false; }
+            catch (Exception) { return false; }
             return true;
         }
 

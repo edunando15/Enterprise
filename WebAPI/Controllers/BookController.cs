@@ -22,7 +22,7 @@ namespace Esame_Enterprise.Web.Controllers
         public IActionResult GetBooks(GetBooksRequest booksRequest)
         {
             int TotalCount = 0;
-            return Ok(bookService.GetBooks(booksRequest.From, booksRequest.Num, booksRequest.OrderBy, out TotalCount, booksRequest.Author, booksRequest.Publisher, booksRequest.PublicationDate, booksRequest.Category));
+            return Ok(bookService.GetBooks(booksRequest.From, booksRequest.Num, booksRequest.OrderBy, out TotalCount, booksRequest.Name, booksRequest.Author, booksRequest.Publisher, booksRequest.PublicationDate, booksRequest.Category));
         }
 
         [HttpPost]

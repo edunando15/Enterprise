@@ -10,7 +10,7 @@ namespace Esame_Enterprise.Application.Abstractions.Services
 
         bool DeleteBook(int bookId);
 
-        IEnumerable<BookDto> GetBooks(int from, int num, string orderBy, out int totalCount, string author, string publisher, DateTime? publicationDate, CategoryDto category); 
+        IEnumerable<BookDto> GetBooks(int from, int num, string orderBy, out int totalCount, string name, string author, string publisher, DateTime? publicationDate, CategoryDto category); 
 
     }
 }

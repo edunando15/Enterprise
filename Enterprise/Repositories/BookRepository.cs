@@ -42,15 +42,16 @@ namespace Model.Repositories
             return _context.Books.Where(b => b.BookCategories.Any(bc => bc.Category.Name.Contains(category))).ToList();
         }
 
-        public List<Book> GetBooks(int from, int num, string orderBy, out int totalCount, string author, string publisher, DateTime? publicationDate, Category category)
+        public List<Book> GetBooks(int from, int num, string orderBy, out int totalCount, string name, string author, string publisher, DateTime? publicationDate, Category category)
         {
             var books = _context.Books.AsQueryable();
             totalCount = books.Count();
             OrderSet(books, orderBy);
             if (!string.IsNullOrWhiteSpace(author)) books = books.Where(b => b.Author.Contains(author));
             if (!string.IsNullOrWhiteSpace(publisher)) books = books.Where(b => b.Publisher.Contains(publisher));
+            if (!string.IsNullOrWhiteSpace(name)) books = books.Where(b => b.Name.Contains(name));
             if (publicationDate != null) books = books.Where(b => b.PublicationDate.Equals(publicationDate));
-            if (category != null) books = books.Where(b => b.BookCategories.Any(bc => bc.Category.Name.Contains(category.Name)));
+            if (category != null) books = books.Where(b => b.BookCategories.Any(bc => bc.Category.Id == category.Id));
             return books
                 .Skip(from)
                 .Take(num)
