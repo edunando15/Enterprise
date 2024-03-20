@@ -1,6 +1,7 @@
 ﻿using Esame_Enterprise.Application.Abstractions.Services;
 using Esame_Enterprise.Application.Models.Requests;
 using Esame_Enterprise.Application.Options;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -13,11 +14,12 @@ namespace Esame_Enterprise.Application.Services
 
         private readonly IUserService userService;
 
-        private readonly JwtAuthenticationOption jwtAuthenticationOptions;
+        private readonly JwtAuthenticationOption jwtAuthenticationOption;
 
-        public TokenService(IUserService userService)
+        public TokenService(IUserService userService, IOptions<JwtAuthenticationOption> option)
         {
             this.userService = userService;
+            this.jwtAuthenticationOption = option.Value;
         }
 
         public string CreateToken(CreateTokenRequest request)
@@ -38,7 +40,7 @@ namespace Esame_Enterprise.Application.Services
 
         private JwtSecurityToken GetJwtSecurityToken(List<Claim> claims)
         {
-            return new JwtSecurityToken(jwtAuthenticationOptions.Issuer, 
+            return new JwtSecurityToken(jwtAuthenticationOption.Issuer, 
                 null,
                 claims,
                 expires: DateTime.Now.AddMinutes(30), 
@@ -47,7 +49,7 @@ namespace Esame_Enterprise.Application.Services
 
         private SigningCredentials GetCredentials()
         {
-            var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtAuthenticationOptions.Key));
+            var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtAuthenticationOption.Key));
             return new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
         }
         
