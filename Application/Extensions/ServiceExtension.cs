@@ -21,6 +21,7 @@ namespace Esame_Enterprise.Application.Extensions
             services.AddScoped<IBookService, BookService>();
             services.AddScoped<ICategoryService, CategoryService>();
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<ITokenService, TokenService>();
             return services;
         }
 

@@ -3,8 +3,6 @@ using Esame_Enterprise.Application.Factories;
 using Esame_Enterprise.Application.Models.Dto;
 using Esame_Enterprise.Application.Models.Requests;
 using Esame_Enterprise.Application.Models.Responses;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Esame_Enterprise.Web.Controllers
@@ -28,13 +26,13 @@ namespace Esame_Enterprise.Web.Controllers
         [Route("SignUp")]
         public IActionResult SignUp(CreateUserRequest request)
         {
-            var dto = new UserDto() { Email = request.Email, Name = request.Email, Surname = request.Surname, Password = request.Password };
+            var dto = new UserDto() { Email = request.Email, Name = request.Name, Surname = request.Surname, Password = request.Password };
             if (userService.SignUp(dto)) 
                 return Ok(ResponseFactory.WithSuccess(
-                    new CreateUserResponse() { Name = dto.Name, Surname = dto.Surname })
+                    new CreateUserResponse() { Name = dto.Name, Surname = dto.Surname, Email = dto.Email, Message = "User created succesfully." })
                     );
             return BadRequest(ResponseFactory.WithError(
-                new CreateUserResponse() { Email = dto.Email })
+                new CreateUserResponse() { Email = dto.Email, Name = dto.Name, Surname = dto.Surname, Message = "Already existing user." })
                 );
         }
 
@@ -43,8 +41,8 @@ namespace Esame_Enterprise.Web.Controllers
         public IActionResult LogIn(CreateTokenRequest request)
         {
             string token = tokenService.CreateToken(request);
-            if(token != string.Empty) return Ok(token);
-            else return BadRequest();
+            if(token != string.Empty) return Ok(ResponseFactory.WithSuccess(new CreateTokenResponse(token)));
+            else return BadRequest(ResponseFactory.WithError(new CreateTokenResponse(token)));
         }
     }
 }

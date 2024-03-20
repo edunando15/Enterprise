@@ -3,7 +3,9 @@
     public class CreateTokenResponse
     {
 
-        public string Token { get; set; }
+        public string Token { get; set; } = string.Empty;
+
+        public CreateTokenResponse(string token) { Token = token; }
 
     }
 }
