@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Model.Context;
 
 namespace Model.Repositories
@@ -54,6 +55,11 @@ namespace Model.Repositories
         public void Save()
         {
             _context.SaveChanges();
+        }
+
+        public virtual bool Exists(int id)
+        {
+            return _context.Categories.Any(c => c.Id == id);
         }
 
 

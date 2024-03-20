@@ -21,7 +21,7 @@ namespace Esame_Enterprise.Application.Validators
                 .WithMessage("Password can't be null.")
                 .MinimumLength(5)
                 .WithMessage("The password must be at least 5 characters long.")
-                .RegExt("^(?=.*[A-Z])(?=.*[a-z])(?=.*\\d)(?=.*[!@#$%^&*()_+{}\\[\\]:;<>,.?~\\\\-]).{6,}$",
+                .RegEx("^(?=.*[A-Z])(?=.*[a-z])(?=.*\\d)(?=.*[!@#$%^&*()_+{}\\[\\]:;<>,.?~\\\\-]).{6,}$",
                 "Password must be at least 5 characters long and it must contain at least one lower case character, one upper case character, and one special character.");
         }
 
