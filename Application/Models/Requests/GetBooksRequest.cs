@@ -16,7 +16,7 @@ namespace Esame_Enterprise.Application.Models.Requests
         public string? Author { get; set; }
         public string? Publisher { get; set; }
         public DateTime? PublicationDate { get; set; }
-        public CategoryDto? Category { get; set; }
+        public string? Category { get; set; }
 
     }
 }

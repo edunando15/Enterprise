@@ -14,6 +14,7 @@ namespace Esame_Enterprise.Application.Models.Dto
 
         public string Password { get; set; }
 
+
         public User ToEntity()
         {
             return new User()
@@ -24,5 +25,7 @@ namespace Esame_Enterprise.Application.Models.Dto
                 Password = this.Password
             };
         }
+
     }
+
 }

@@ -6,8 +6,8 @@ namespace Esame_Enterprise.Application.Models.Requests
     {
         public string Name { get; set; } = string.Empty;
         public string Author { get; set; } = string.Empty;
-        public DateTime PublicationDate { get; set; }
         public string Publisher { get; set; } = string.Empty;
+        public DateTime PublicationDate { get; set; }
         public virtual ICollection<string> Categories { get; set; } = new List<string>();
 
     }

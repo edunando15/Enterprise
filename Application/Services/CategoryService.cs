@@ -38,19 +38,13 @@ namespace Esame_Enterprise.Application.Services
                 repository.Delete(categoryId);
                 repository.Save();
             }
-            catch(Exception ex) { return false; }
+            catch(Exception) { return false; }
             return true;
         }
 
         public List<CategoryDto> GetCategories()
         {
             return repository.GetCategories().Select(c => new CategoryDto() { Id = c.Id, Name = c.Name }).ToList();
-        }
-
-        public CategoryDto? GetCategory(string name)
-        {
-            var c =  repository.GetCategory(name);
-            return c != null ? new CategoryDto() { Id = c.Id, Name = c.Name } : null;
         }
 
     }

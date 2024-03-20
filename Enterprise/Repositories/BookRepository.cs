@@ -12,36 +12,6 @@ namespace Model.Repositories
             return _context.Books.Find(id);
         }
 
-        public List<Book> GetByName(string name)
-        {
-            if (string.IsNullOrWhiteSpace(name)) _context.Books.ToList();
-            return _context.Books.Where(b => b.Name.Contains(name)).ToList();
-        }
-
-        public List<Book> GetByAuthor(string author)
-        {
-            if(string.IsNullOrWhiteSpace(author)) return _context.Books.ToList();
-            return _context.Books.Where(b => b.Author.Contains(author)).ToList();
-        }
-
-        public List<Book> GetByPublisher(string publisher)
-        {
-            if(string.IsNullOrWhiteSpace(publisher)) return _context.Books.ToList();
-            return _context.Books.Where(b => b.Publisher.Contains(publisher)).ToList();
-        }
-
-        public List<Book> GetByPublicationDate(DateTime? date)
-        {
-            if (date == null) return _context.Books.ToList();
-            return _context.Books.Where(b => b.PublicationDate.Equals(date)).ToList();
-        }
-
-        public List<Book> GetByCategory(string category)
-        {
-            if(string.IsNullOrWhiteSpace(category)) return _context.Books.ToList();
-            return _context.Books.Where(b => b.BookCategories.Any(bc => bc.Category.Name.Contains(category))).ToList();
-        }
-
         public List<Book> GetBooks(int from, int num, string orderBy, out int totalCount, string name, string author, string publisher, DateTime? publicationDate, Category category)
         {
             var books = _context.Books.AsQueryable();
