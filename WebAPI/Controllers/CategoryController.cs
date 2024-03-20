@@ -1,12 +1,15 @@
 ﻿using Esame_Enterprise.Application.Abstractions.Services;
 using Esame_Enterprise.Application.Models.Dto;
 using Esame_Enterprise.Application.Models.Requests;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Esame_Enterprise.Web.Controllers
 {
     [ApiController]
     [Route("api/v1/[controller]/category")]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class CategoryController : ControllerBase
     {
 

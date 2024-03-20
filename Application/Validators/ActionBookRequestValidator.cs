@@ -21,7 +21,7 @@ namespace Esame_Enterprise.Application.Validators
                 .NotEmpty().WithMessage("Publication Date can't be empty")
                 .NotNull().WithMessage("Publication Date is required")
                 .LessThan(System.DateTime.Now).WithMessage("Publication Date can't be in the future");
-            RuleFor(x => x.BookCategories)
+            RuleFor(x => x.Categories)
                 .Must(x => x.Count > 0).WithMessage("At least one Book Category is required");
         }   
 
