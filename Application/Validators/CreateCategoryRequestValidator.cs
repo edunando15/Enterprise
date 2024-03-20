@@ -1,9 +1,10 @@
 ﻿using Model.Entities;
 using FluentValidation;
+using Esame_Enterprise.Application.Models.Requests;
 
 namespace Esame_Enterprise.Application.Validators
 {
-    public class CreateCategoryRequestValidator : AbstractValidator<Category>
+    public class CreateCategoryRequestValidator : AbstractValidator<CreateCategoryRequest>
     {
         public CreateCategoryRequestValidator()
         {

@@ -1,9 +1,10 @@
-﻿using FluentValidation;
+﻿using Esame_Enterprise.Application.Models.Requests;
+using FluentValidation;
 using Model.Entities;
 
 namespace Esame_Enterprise.Application.Validators
 {
-    public class ActionBookRequestValidator : AbstractValidator<Book>
+    public class ActionBookRequestValidator : AbstractValidator<ActionBookRequest>
     {
         public ActionBookRequestValidator()
         {
