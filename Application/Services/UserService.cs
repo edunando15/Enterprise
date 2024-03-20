@@ -9,34 +9,34 @@ namespace Esame_Enterprise.Application.Services
     public class UserService : IUserService
     {
 
-        private readonly UserRepository repository;
+        private readonly UserRepository _repository;
 
-        private readonly JwtAuthenticationOption jwtOptions;
+        private readonly JwtAuthenticationOption _jwtOption;
 
         public UserService(UserRepository repository, IOptions<JwtAuthenticationOption> jwtOptions)
         {
-            this.repository = repository;
-            this.jwtOptions = jwtOptions.Value;
+            this._repository = repository;
+            this._jwtOption = jwtOptions.Value;
         }
 
         public UserDto? LogIn(string email, string password)
         {
-            var user = repository.GetUser(email, password);
+            var user = _repository.GetUser(email, password);
             if(user != null) return new UserDto() { Email = user.Email, Name = user.Name, Surname = user.Surname, Password = user.Password };
             return null;
         }
 
         public bool SignUp(UserDto user)
         {
-            if (repository.UserExists(user.Email)) return false;
-            repository.Insert(user.ToEntity());
-            repository.Save();
+            if (_repository.UserExists(user.Email)) return false;
+            _repository.Insert(user.ToEntity());
+            _repository.Save();
             return true;
         }
 
         public UserDto? GetUser(string email)
         {
-            var user = repository.GetUser(email);
+            var user = _repository.GetUser(email);
             if(user != null) return new UserDto() { Name = user.Name, Surname = user.Surname, Email = user.Email, Password = user.Password };
             else return null;
         }

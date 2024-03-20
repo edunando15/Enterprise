@@ -12,14 +12,14 @@ namespace Esame_Enterprise.Web.Controllers
     public class UserController : ControllerBase
     {
 
-        IUserService userService;
+        IUserService _userService;
 
-        ITokenService tokenService;
+        ITokenService _tokenService;
 
         public UserController(IUserService userService, ITokenService tokenService)
         {
-            this.userService = userService;
-            this.tokenService = tokenService;
+            this._userService = userService;
+            this._tokenService = tokenService;
         }
 
         [HttpPost]
@@ -27,7 +27,7 @@ namespace Esame_Enterprise.Web.Controllers
         public IActionResult SignUp(CreateUserRequest request)
         {
             var dto = new UserDto() { Email = request.Email, Name = request.Name, Surname = request.Surname, Password = request.Password };
-            if (userService.SignUp(dto)) 
+            if (_userService.SignUp(dto)) 
                 return Ok(ResponseFactory.WithSuccess(
                     new CreateUserResponse() { Name = dto.Name, Surname = dto.Surname, Email = dto.Email, Message = "User created succesfully." })
                     );
@@ -40,7 +40,7 @@ namespace Esame_Enterprise.Web.Controllers
         [Route("LogIn")]
         public IActionResult LogIn(CreateTokenRequest request)
         {
-            string token = tokenService.CreateToken(request);
+            string token = _tokenService.CreateToken(request);
             if(token != string.Empty) return Ok(ResponseFactory.WithSuccess(new CreateTokenResponse(token)));
             else return BadRequest(ResponseFactory.WithError(new CreateTokenResponse(token)));
         }

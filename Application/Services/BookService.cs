@@ -8,38 +8,38 @@ namespace Esame_Enterprise.Application.Services
     public class BookService : IBookService
     {
 
-        private readonly BookRepository bookRepository;
+        private readonly BookRepository _bookRepository;
 
-        private readonly BookCategoryRepository bookCategoryRepository;
+        private readonly BookCategoryRepository _bookCategoryRepository;
 
-        private readonly CategoryRepository categoryRepository;
+        private readonly CategoryRepository _categoryRepository;
 
         public BookService(BookRepository bookRepository, BookCategoryRepository bookCategoryRepository, CategoryRepository categoryRepository)
         {
-            this.bookRepository = bookRepository;
-            this.bookCategoryRepository = bookCategoryRepository;
-            this.categoryRepository = categoryRepository;
+            this._bookRepository = bookRepository;
+            this._bookCategoryRepository = bookCategoryRepository;
+            this._categoryRepository = categoryRepository;
         }
 
         public bool AddBook(BookDto book)
         {
             if (!SetCategoriesId(book.Categories)) return false; // Aggiungi solo libri con categorie gia' esistenti.
             var realBook = book.ToEntity();
-            bookRepository.Insert(realBook);
+            _bookRepository.Insert(realBook);
             foreach (var bc in realBook.BookCategories)
             {
-                bookCategoryRepository.Insert(bc);
+                _bookCategoryRepository.Insert(bc);
             }
-            bookRepository.Save();
-            bookCategoryRepository.Save();
+            _bookRepository.Save();
+            _bookCategoryRepository.Save();
             return true;
         }
 
         public bool DeleteBook(int Id)
         {
-            if (bookRepository.Get(Id) == null) return false;
-            bookRepository.Delete(Id);
-            bookRepository.Save();
+            if (_bookRepository.Get(Id) == null) return false;
+            _bookRepository.Delete(Id);
+            _bookRepository.Save();
             return true;
         }
 
@@ -47,8 +47,8 @@ namespace Esame_Enterprise.Application.Services
         {
             Category? cat;
             if (string.IsNullOrEmpty(category)) cat = null;
-            else cat = categoryRepository.GetCategory(category);
-            var res = bookRepository.GetBooks(from, num, orderBy, out totalCount, name, author, publisher, publicationDate, cat);
+            else cat = _categoryRepository.GetCategory(category);
+            var res = _bookRepository.GetBooks(from, num, orderBy, out totalCount, name, author, publisher, publicationDate, cat);
             return GetDtos(res);
         }
 
@@ -64,7 +64,7 @@ namespace Esame_Enterprise.Application.Services
                     Author = book.Author,
                     PublicationDate = book.PublicationDate,
                     Publisher = book.Publisher,
-                    Categories = getCategories(bookCategoryRepository.GetBookCategoriesByBook(book.Id))
+                    Categories = getCategories(_bookCategoryRepository.GetBookCategoriesByBook(book.Id))
                 });
             }
             return res;
@@ -86,28 +86,28 @@ namespace Esame_Enterprise.Application.Services
             if (!SetCategoriesId(book.Categories)) return; // Modifico solo libri con categorie gia' esistenti.
             var newCategories = book.Categories.ToList();
             var realBook = book.ToEntity();
-            bookRepository.Modify(realBook);
+            _bookRepository.Modify(realBook);
             if(newCategories.Count > 0)
             {
-                var bookCategories = bookCategoryRepository.GetBookCategoriesByBook(realBook.Id);
+                var bookCategories = _bookCategoryRepository.GetBookCategoriesByBook(realBook.Id);
                 foreach (var bookCategory in bookCategories)
                 {
-                    bookCategoryRepository.DeleteBookCategoryByBookId(realBook.Id);
+                    _bookCategoryRepository.DeleteBookCategoryByBookId(realBook.Id);
                 }
                 foreach (var category in newCategories)
                 {
-                    bookCategoryRepository.Insert(new BookCategory() { BookId = realBook.Id, CategoryId = category.Id});
+                    _bookCategoryRepository.Insert(new BookCategory() { BookId = realBook.Id, CategoryId = category.Id});
                 }
-                bookCategoryRepository.Save();
+                _bookCategoryRepository.Save();
             }
-            bookRepository.Save();
+            _bookRepository.Save();
         }
 
         private bool SetCategoriesId(ICollection<CategoryDto> categories)
         {
             foreach (var category in categories)
             {
-                var cat = categoryRepository.GetCategory(category.Name);
+                var cat = _categoryRepository.GetCategory(category.Name);
                 if (cat != null) category.Id = cat.Id;
                 else return false;
             }
@@ -118,7 +118,7 @@ namespace Esame_Enterprise.Application.Services
         {
             foreach (var category in categories)
             {
-                var cat = categoryRepository.Get(category.Id);
+                var cat = _categoryRepository.Get(category.Id);
                 if (cat != null) category.Name = cat.Name;
             }
         }

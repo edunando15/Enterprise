@@ -3,6 +3,7 @@ using Microsoft.OpenApi.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using Esame_Enterprise.Web.Results;
 
 namespace Esame_Enterprise.Web.Extensions
 {
@@ -10,7 +11,14 @@ namespace Esame_Enterprise.Web.Extensions
     {
         public static IServiceCollection AddWebServices(this IServiceCollection services)
         {
-            services.AddControllers();
+            services.AddControllers()
+                .ConfigureApiBehaviorOptions(options =>
+                {
+                    options.InvalidModelStateResponseFactory = (context) =>
+                    {
+                        return new BadRequestResultFactory(context);
+                    };
+                });
             services.AddEndpointsApiExplorer();
             return services;
         }

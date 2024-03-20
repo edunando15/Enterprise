@@ -43,6 +43,7 @@ namespace Model.Repositories
                 case ("date"):
                 case ("publication"):
                 case ("publication date"): books = books.OrderBy(b => b.PublicationDate); break;
+                case ("name"): books = books.OrderBy(b => b.Name); break;
                 default: books = books.OrderBy(b => b.Id); break;
             }
             return books;

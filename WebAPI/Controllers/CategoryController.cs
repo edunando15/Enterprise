@@ -13,25 +13,25 @@ namespace Esame_Enterprise.Web.Controllers
     public class CategoryController : ControllerBase
     {
 
-        ICategoryService categoryService;
+        ICategoryService _categoryService;
 
         public CategoryController(ICategoryService categoryService)
         {
-            this.categoryService = categoryService;
+            this._categoryService = categoryService;
         }
 
         [HttpPost]
         [Route("GetCategories")]
         public IActionResult GetCategories()
         {
-            return Ok(categoryService.GetCategories());
+            return Ok(_categoryService.GetCategories());
         }
 
         [HttpPost]
         [Route("AddCategory")]
         public IActionResult AddCategory(CreateCategoryRequest category)
         {
-            if (categoryService.AddCategory(new CategoryDto(category))) return Ok();
+            if (_categoryService.AddCategory(new CategoryDto(category))) return Ok();
             return BadRequest();
         }
 
@@ -39,7 +39,7 @@ namespace Esame_Enterprise.Web.Controllers
         [Route("DeleteCategory")]
         public IActionResult DeleteCategory(DeleteCategoryRequest request)
         {
-            if (categoryService.DeleteCategory(request.Id)) return Ok();
+            if (_categoryService.DeleteCategory(request.Id)) return Ok();
             return BadRequest();
         }
 

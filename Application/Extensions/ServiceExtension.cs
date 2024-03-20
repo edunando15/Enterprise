@@ -2,7 +2,6 @@
 using Esame_Enterprise.Application.Services;
 using FluentValidation;
 using FluentValidation.AspNetCore;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Esame_Enterprise.Application.Extensions

@@ -12,19 +12,19 @@ namespace Esame_Enterprise.Application.Services
     public class TokenService : ITokenService
     {
 
-        private readonly IUserService userService;
+        private readonly IUserService _userService;
 
-        private readonly JwtAuthenticationOption jwtAuthenticationOption;
+        private readonly JwtAuthenticationOption _jwtAuthenticationOption;
 
         public TokenService(IUserService userService, IOptions<JwtAuthenticationOption> option)
         {
-            this.userService = userService;
-            this.jwtAuthenticationOption = option.Value;
+            this._userService = userService;
+            this._jwtAuthenticationOption = option.Value;
         }
 
         public string CreateToken(CreateTokenRequest request)
         {
-            var user = userService.LogIn(request.Email, request.Password);
+            var user = _userService.LogIn(request.Email, request.Password);
             if(user != null)
             {
                 List<Claim> claims = new List<Claim>();
@@ -40,7 +40,7 @@ namespace Esame_Enterprise.Application.Services
 
         private JwtSecurityToken GetJwtSecurityToken(List<Claim> claims)
         {
-            return new JwtSecurityToken(jwtAuthenticationOption.Issuer, 
+            return new JwtSecurityToken(_jwtAuthenticationOption.Issuer, 
                 null,
                 claims,
                 expires: DateTime.Now.AddMinutes(30), 
@@ -49,7 +49,7 @@ namespace Esame_Enterprise.Application.Services
 
         private SigningCredentials GetCredentials()
         {
-            var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtAuthenticationOption.Key));
+            var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtAuthenticationOption.Key));
             return new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
         }
         

@@ -13,11 +13,11 @@ namespace Esame_Enterprise.Web.Controllers
     public class BookController : ControllerBase
     {
 
-        IBookService bookService;
+        IBookService _bookService;
 
         public BookController(IBookService bookService)
         {
-            this.bookService = bookService;
+            this._bookService = bookService;
         }
 
         [HttpPost]
@@ -25,14 +25,14 @@ namespace Esame_Enterprise.Web.Controllers
         public IActionResult GetBooks(GetBooksRequest booksRequest)
         {
             int TotalCount = 0;
-            return Ok(bookService.GetBooks(booksRequest.From, booksRequest.Num, booksRequest.OrderBy, out TotalCount, booksRequest.Name, booksRequest.Author, booksRequest.Publisher, booksRequest.PublicationDate, booksRequest.Category));
+            return Ok(_bookService.GetBooks(booksRequest.From, booksRequest.Num, booksRequest.OrderBy, out TotalCount, booksRequest.Name, booksRequest.Author, booksRequest.Publisher, booksRequest.PublicationDate, booksRequest.Category));
         }
 
         [HttpPost]
         [Route("AddBook")]
         public IActionResult AddBook(ActionBookRequest book)
         {
-            if (bookService.AddBook(new BookDto(book))) return Ok();
+            if (_bookService.AddBook(new BookDto(book))) return Ok();
             return BadRequest();
         }
 
@@ -40,7 +40,7 @@ namespace Esame_Enterprise.Web.Controllers
         [Route("DeleteBook")]
         public IActionResult DeleteBook(int bookId)
         {
-            if (bookService.DeleteBook(bookId)) return Ok();
+            if (_bookService.DeleteBook(bookId)) return Ok();
             return BadRequest();
         }
 
@@ -50,7 +50,7 @@ namespace Esame_Enterprise.Web.Controllers
         {
             var realBook = new BookDto(book);
             realBook.Id = id;
-            bookService.ModifyBook(realBook);
+            _bookService.ModifyBook(realBook);
             return Ok();
         }
     }
