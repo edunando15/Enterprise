@@ -11,7 +11,5 @@ namespace Esame_Enterprise.Application.Abstractions.Services
 
         bool DeleteCategory(int categoryId);
 
-        CategoryDto? GetCategory(string name);
-
     }
 }

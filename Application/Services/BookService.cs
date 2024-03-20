@@ -21,8 +21,6 @@ namespace Esame_Enterprise.Application.Services
             this.categoryRepository = categoryRepository;
         }
 
-
-
         public bool AddBook(BookDto book)
         {
             if (!SetCategoriesId(book.Categories)) return false; // Aggiungi solo libri con categorie gia' esistenti.
@@ -45,9 +43,12 @@ namespace Esame_Enterprise.Application.Services
             return true;
         }
 
-        public IEnumerable<BookDto> GetBooks(int from, int num, string orderBy, out int totalCount, string? name, string? author, string? publisher, DateTime? publicationDate, CategoryDto? category)
+        public IEnumerable<BookDto> GetBooks(int from, int num, string orderBy, out int totalCount, string? name, string? author, string? publisher, DateTime? publicationDate, string? category)
         {
-            var res = bookRepository.GetBooks(from, num, orderBy, out totalCount, name, author, publisher, publicationDate, category != null ? category.ToEntity() : null);
+            Category? cat;
+            if (string.IsNullOrEmpty(category)) cat = null;
+            else cat = categoryRepository.GetCategory(category);
+            var res = bookRepository.GetBooks(from, num, orderBy, out totalCount, name, author, publisher, publicationDate, cat);
             return GetDtos(res);
         }
 
