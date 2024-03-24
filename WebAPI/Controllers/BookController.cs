@@ -32,8 +32,9 @@ namespace Esame_Enterprise.Web.Controllers
         [Route("AddBook")]
         public IActionResult AddBook(ActionBookRequest book)
         {
-            if (_bookService.AddBook(new BookDto(book))) return Ok();
-            return BadRequest();
+            BookDto? result = _bookService.AddBook(new BookDto(book));
+            if (result == null) return BadRequest();
+            return Ok(result);
         }
 
         [HttpDelete]
@@ -50,8 +51,9 @@ namespace Esame_Enterprise.Web.Controllers
         {
             var realBook = new BookDto(book);
             realBook.Id = id;
-            _bookService.ModifyBook(realBook);
-            return Ok();
+            realBook = _bookService.ModifyBook(realBook);
+            if (realBook == null) return BadRequest();
+            return Ok(realBook);
         }
     }
 }

@@ -7,7 +7,7 @@ namespace Esame_Enterprise.Application.Abstractions.Services
 
         List<CategoryDto> GetCategories();
 
-        bool AddCategory(CategoryDto category);
+        CategoryDto? AddCategory(CategoryDto category);
 
         bool DeleteCategory(int categoryId);
 

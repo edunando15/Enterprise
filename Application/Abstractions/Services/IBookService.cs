@@ -4,9 +4,9 @@ namespace Esame_Enterprise.Application.Abstractions.Services
 {
     public interface IBookService
     {
-        bool AddBook(BookDto book);
+        BookDto? AddBook(BookDto book);
 
-        void ModifyBook(BookDto book);
+        BookDto? ModifyBook(BookDto book);
 
         bool DeleteBook(int bookId);
 

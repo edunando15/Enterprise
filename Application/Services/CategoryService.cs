@@ -17,16 +17,17 @@ namespace Esame_Enterprise.Application.Services
             this._bookCategoryRepository = bookCategoryRepository;
         }
 
-        public bool AddCategory(CategoryDto category)
+        public CategoryDto? AddCategory(CategoryDto category)
         {
-            if (_categoryRepository.GetCategory(category.Name) != null) return false;
+            if (_categoryRepository.GetCategory(category.Name) != null) return null;
+            var realCategory = category.ToEntity();
             try
             {
-                _categoryRepository.Insert(category.ToEntity());
+                _categoryRepository.Insert(realCategory);
                 _categoryRepository.Save();
             }
-            catch (Exception) { return false; }
-            return true;
+            catch (Exception) { return null; }
+            return new CategoryDto(realCategory);
         }
 
         public bool DeleteCategory(int categoryId)

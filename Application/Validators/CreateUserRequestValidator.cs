@@ -8,12 +8,6 @@ namespace Esame_Enterprise.Application.Validators
     {
         public CreateUserRequestValidator()
         {
-            RuleFor(x => x.Name)
-                .NotEmpty().WithMessage("Name can't be empty")
-                .NotNull().WithMessage("Name is required");
-            RuleFor(x => x.Surname)
-                .NotEmpty().WithMessage("Surname can't be empty")
-                .NotNull().WithMessage("Surname is required");
             RuleFor(x => x.Email)
                 .NotNull().WithMessage("Email is required")
                 .EmailAddress().WithMessage("Invalid Email");

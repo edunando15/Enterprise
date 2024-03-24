@@ -21,9 +21,9 @@ namespace Esame_Enterprise.Application.Services
             this._categoryRepository = categoryRepository;
         }
 
-        public bool AddBook(BookDto book)
+        public BookDto? AddBook(BookDto book)
         {
-            if (!SetCategoriesId(book.Categories)) return false; // Aggiungi solo libri con categorie gia' esistenti.
+            if (!SetCategoriesId(book.Categories)) return null; // Aggiungi solo libri con categorie gia' esistenti.
             var realBook = book.ToEntity();
             _bookRepository.Insert(realBook);
             foreach (var bc in realBook.BookCategories)
@@ -32,7 +32,7 @@ namespace Esame_Enterprise.Application.Services
             }
             _bookRepository.Save();
             _bookCategoryRepository.Save();
-            return true;
+            return new BookDto(realBook);
         }
 
         public bool DeleteBook(int Id)
@@ -81,26 +81,24 @@ namespace Esame_Enterprise.Application.Services
             return res;
         }
 
-        public void ModifyBook(BookDto book)
+        public BookDto? ModifyBook(BookDto book)
         {
-            if (!SetCategoriesId(book.Categories)) return; // Modifico solo libri con categorie gia' esistenti.
+            if (!SetCategoriesId(book.Categories)) return null;
             var newCategories = book.Categories.ToList();
             var realBook = book.ToEntity();
             _bookRepository.Modify(realBook);
+            realBook.BookCategories.Clear();
             if(newCategories.Count > 0)
             {
-                var bookCategories = _bookCategoryRepository.GetBookCategoriesByBook(realBook.Id);
-                foreach (var bookCategory in bookCategories)
-                {
-                    _bookCategoryRepository.DeleteBookCategoryByBookId(realBook.Id);
-                }
+                _bookCategoryRepository.DeleteBookCategoryByBookId(realBook.Id);
                 foreach (var category in newCategories)
                 {
                     _bookCategoryRepository.Insert(new BookCategory() { BookId = realBook.Id, CategoryId = category.Id});
                 }
                 _bookCategoryRepository.Save();
-            }
+            } 
             _bookRepository.Save();
+            return new BookDto(realBook);
         }
 
         private bool SetCategoriesId(ICollection<CategoryDto> categories)

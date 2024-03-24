@@ -31,8 +31,9 @@ namespace Esame_Enterprise.Web.Controllers
         [Route("AddCategory")]
         public IActionResult AddCategory(CreateCategoryRequest category)
         {
-            if (_categoryService.AddCategory(new CategoryDto(category))) return Ok();
-            return BadRequest();
+            var realCategory = _categoryService.AddCategory(new CategoryDto(category));
+            if (realCategory == null) return BadRequest();
+            return Ok(realCategory);
         }
 
         [HttpDelete]
