@@ -32,6 +32,7 @@ namespace Esame_Enterprise.Web.Extensions
                     Title = "Enterprise",
                     Version = "v1"
                 });
+                // definizione della sicurezza
                 c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme()
                 {
                     Name = "Authorization",
@@ -41,6 +42,7 @@ namespace Esame_Enterprise.Web.Extensions
                     In = ParameterLocation.Header,
                     Description = "JWT Authorization header using the Bearer scheme. \r\n\r\n Enter 'Bearer' [space] and then your token in the text input below.\r\n\r\nExample: \"Bearer 1safsfsdfdfd\""
                 });
+                // Per tutte le api.
                 c.AddSecurityRequirement(new OpenApiSecurityRequirement()
                 {
                     {
@@ -64,23 +66,27 @@ namespace Esame_Enterprise.Web.Extensions
             var jwtAuthOpt = new JwtAuthenticationOption();
             configuration.GetSection("JwtAuthentication")
                 .Bind(jwtAuthOpt);
+            // aggiungiamo l'autenticazione, e impostiamo lo schema di autenticazione predefinito a JwtBearer....AuthenticationScheme
             services.AddAuthentication(options =>
             {
                 options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
                 options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            }).AddJwtBearer(options =>
+            })
+                // aggiungiamo il JwtBearer per validare i token JWT delle varie richieste
+                .AddJwtBearer(options =>
             {
                 string key = jwtAuthOpt.Key;
                 var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(key));
+                // parametri per la convalida del token
                 options.TokenValidationParameters = new TokenValidationParameters()
                 {
-                    ValidateIssuer = true,
-                    ValidateLifetime = true,
-                    ValidateAudience = false,
-                    ValidateIssuerSigningKey = true,
-                    ValidIssuer = jwtAuthOpt.Issuer,
-                    IssuerSigningKey = securityKey
+                    ValidateIssuer = true, // chi emette il token deve essere verificato
+                    ValidateLifetime = true, // il tempo di vita del token deve essere verificato
+                    ValidateAudience = false, // chi utilizza il token non deve essere verificato
+                    ValidateIssuerSigningKey = true, // la chiave di firma del token deve essere verificata
+                    ValidIssuer = jwtAuthOpt.Issuer, // chi emette il token. Viene controllato che chi lo emette sia questo.
+                    IssuerSigningKey = securityKey // chiave di firma
                 };
             });
             services.Configure<JwtAuthenticationOption>(configuration.GetSection("JwtAuthentication"));

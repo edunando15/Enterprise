@@ -11,7 +11,9 @@ namespace Esame_Enterprise.Application.Extensions
 
         public static IServiceCollection AddApplicationServices(this IServiceCollection services) 
         {
+            // regole agevoli di validazione
             services.AddFluentValidationAutoValidation();
+            // quelli che implementano una classe di microsoft
             services.AddValidatorsFromAssembly(
                 AppDomain
                 .CurrentDomain

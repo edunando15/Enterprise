@@ -9,11 +9,12 @@ namespace Esame_Enterprise.Web.Extensions
 
         public static WebApplication? AddWebMiddleware(this WebApplication? app)
         {
-            app.UseSwagger();
-            app.UseSwaggerUI();
+            app.UseSwagger(); // genera un documento JSON con tutti gli endpoint
+            app.UseSwaggerUI(); // usa il documento generato per creare un'interfaccia grafica usabile
             app.UseHttpsRedirection();
             app.UseAuthorization();
             app.UseAuthentication();
+            // middleware per gestire le eccezioni non gestite: mette errore 500 e restituisce un oggetto JSON con l'errore
             app.UseExceptionHandler(appError =>
             {
                 appError.Run(async context =>
@@ -29,6 +30,7 @@ namespace Esame_Enterprise.Web.Extensions
                     }
                 });
             });
+            // mappa le rotte sui controller (raggiungibili da url)
             app.MapControllers();
             return app;
         }

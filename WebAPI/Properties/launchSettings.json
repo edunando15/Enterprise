@@ -9,7 +9,7 @@
     }
   },
   "profiles": {
-    "Esame Enterprise - Development": {
+    "Esame_Enterprise.Web": {
       "commandName": "Project",
       "dotnetRunMessages": true,
       "launchBrowser": true,
